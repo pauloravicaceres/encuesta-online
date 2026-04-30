@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,6 +10,9 @@ const PORT = process.env.PORT || 3000;
 // Configuración de Seguridad
 app.use(cors()); // En producción, limita esto a tu dominio específico
 app.use(express.json());
+
+// Servir archivos estáticos del frontend
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint para procesar la encuesta
 app.post('/api/survey', async (req, res) => {

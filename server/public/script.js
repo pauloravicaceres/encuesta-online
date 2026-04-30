@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
             ]
         };
 
-        // Configuración de Seguridad: Ahora usamos nuestro servidor proxy
-        const BACKEND_URL = 'http://localhost:3001/api/survey';
+        // Configuración de Seguridad: Ahora usamos nuestro servidor proxy (URL relativa para cloud)
+        const BACKEND_URL = '/api/survey';
 
         try {
             submitBtn.disabled = true;
