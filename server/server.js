@@ -37,7 +37,10 @@ app.post('/api/survey', async (req, res) => {
 
         // 2. Enviar a n8n (Opcional - No bloquea si falla)
         try {
-            await axios.post(process.env.N8N_WEBHOOK_URL, rawData);
+            console.log(`📡 Intentando conectar con n8n en: "${process.env.N8N_WEBHOOK_URL}"`);
+            await axios.post(process.env.N8N_WEBHOOK_URL, rawData, {
+                headers: { 'Content-Type': 'application/json' }
+            });
             console.log('✅ Notificación n8n enviada');
         } catch (n8nError) {
             const status = n8nError.response?.status;
