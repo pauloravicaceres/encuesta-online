@@ -23,27 +23,33 @@ app.post('/api/survey', async (req, res) => {
     }
 
     try {
-        // Realizar peticiones protegidas desde el servidor
-        const [airtableRes, n8nRes] = await Promise.all([
-            axios.post(
-                `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_ID}`,
-                airtableData,
-                {
-                    headers: {
-                        'Authorization': `Bearer ${process.env.AIRTABLE_TOKEN}`,
-                        'Content-Type': 'application/json'
-                    }
+        // 1. Enviar a Airtable (Crítico)
+        const airtableRes = await axios.post(
+            `https://api.airtable.com/v0/${process.env.AIRTABLE_BASE_ID}/${process.env.AIRTABLE_TABLE_ID}`,
+            airtableData,
+            {
+                headers: {
+                    'Authorization': `Bearer ${process.env.AIRTABLE_TOKEN}`,
+                    'Content-Type': 'application/json'
                 }
-            ),
-            axios.post(process.env.N8N_WEBHOOK_URL, rawData)
-        ]);
+            }
+        );
 
-        console.log('✅ Respuestas procesadas y enviadas');
+        // 2. Enviar a n8n (Opcional - No bloquea si falla)
+        try {
+            await axios.post(process.env.N8N_WEBHOOK_URL, rawData);
+            console.log('✅ Notificación n8n enviada');
+        } catch (n8nError) {
+            console.warn('⚠️ Error al enviar a n8n (Email no enviado):', n8nError.message);
+            // No lanzamos el error para que la encuesta se considere exitosa
+        }
+
+        console.log('✅ Encuesta guardada en Airtable con éxito');
         res.status(200).json({ message: 'Encuesta procesada con éxito' });
 
     } catch (error) {
-        console.error('❌ Error en el servidor:', error.response?.data || error.message);
-        res.status(500).json({ error: 'Error interno al procesar la encuesta' });
+        console.error('❌ Error crítico en Airtable:', error.response?.data || error.message);
+        res.status(500).json({ error: 'No se pudo guardar la encuesta en la base de datos' });
     }
 });
 
