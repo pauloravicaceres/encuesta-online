@@ -40,7 +40,9 @@ app.post('/api/survey', async (req, res) => {
             await axios.post(process.env.N8N_WEBHOOK_URL, rawData);
             console.log('✅ Notificación n8n enviada');
         } catch (n8nError) {
-            console.warn('⚠️ Error al enviar a n8n (Email no enviado):', n8nError.message);
+            const status = n8nError.response?.status;
+            const errorMsg = n8nError.response?.data?.message || n8nError.message;
+            console.warn(`⚠️ Error n8n (Email no enviado) - Status: ${status} - Error: ${errorMsg}`);
             // No lanzamos el error para que la encuesta se considere exitosa
         }
 
