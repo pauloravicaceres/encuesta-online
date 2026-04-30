@@ -1,12 +1,12 @@
 :root {
-    --bg-color: #05070a;
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.1);
-    --accent-primary: #6366f1;
-    --accent-secondary: #a855f7;
-    --text-primary: #f8fafc;
+    --bg-color: #0c0e11;
+    --card-bg: rgba(30, 32, 35, 0.7);
+    --card-border: rgba(16, 185, 129, 0.2);
+    --accent-primary: #10b981;
+    --accent-secondary: #059669;
+    --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
-    --input-bg: rgba(255, 255, 255, 0.05);
+    --input-bg: rgba(255, 255, 255, 0.03);
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -189,9 +189,9 @@ textarea:focus {
 
 .options input[type="radio"]:checked + label {
     background: var(--accent-primary);
-    color: white;
+    color: #0c0e11;
     border-color: var(--accent-primary);
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
     transform: scale(1.1);
 }
 
@@ -210,12 +210,12 @@ textarea:focus {
     font-size: 1rem;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.3);
+    box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.3);
 }
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 15px 30px -5px rgba(16, 185, 129, 0.5);
 }
 
 .submit-btn:active {
